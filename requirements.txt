@@ -1,0 +1,4 @@
+python 3.9
+selenium 4.1.0
+moviepy 1.0.3
+pydub 0.25.1
