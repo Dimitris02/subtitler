@@ -44,6 +44,3 @@ def translate(file, name):
         lines[i]=deepl(lines[i][:-3])
 
     with open(vid2sub(name), "wb") as f: f.write(''.join(lines).encode('utf8'))
-
-
-#translate("Babooshka_ORIGINAL.srt", "Babooshka.mp4")
