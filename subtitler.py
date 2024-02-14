@@ -7,9 +7,10 @@ import deepl_scraper as ds
 
 r = sr.Recognizer()
 
-LANG='ru-RU'   # More languages at https://cloud.google.com/speech-to-text/docs/speech-to-text-supported-languages
-SILENCE=500    # Reduce if the dialog is continuous with few pauses
-THRESH=10      # Reduce if the speech-to-noise ratio is low
+LANG='ru-RU'            # More languages at https://cloud.google.com/speech-to-text/docs/speech-to-text-supported-languages
+TRANSLATE_TO=''         # Pick language to translate to. Leaving it empty will default to the language of your IP address
+SILENCE=750             # Reduce if the dialog is continuous with few pauses
+THRESH=10               # Reduce if the speech-to-noise ratio is low
 
 def vid2sub(v):
     a = v[:v.rfind(".")]
@@ -66,7 +67,7 @@ def capture_audio(vid):
 
 def main(file):
     capture_audio(file)
-    ds.translate(vid2sub(file), file)
+    ds.translate(vid2sub(file), file, TRANSLATE_TO)
 
 if __name__ == "__main__":
     f=input("video file name/path: ")
