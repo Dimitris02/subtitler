@@ -9,7 +9,7 @@ r = sr.Recognizer()
 
 LANG='ru-RU'            # More languages at https://cloud.google.com/speech-to-text/docs/speech-to-text-supported-languages
 TRANSLATE_TO=''         # Pick language to translate to. Leaving it empty will default to the language of your IP address
-SILENCE=750             # Reduce if the dialog is continuous with few pauses
+SILENCE=750             # Reduce if the dialog is continuous with small pauses
 THRESH=10               # Reduce if the speech-to-noise ratio is low
 
 def vid2sub(v):
