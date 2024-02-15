@@ -9,7 +9,7 @@ r = sr.Recognizer()
 
 LANG='ru-RU'            # More languages at https://cloud.google.com/speech-to-text/docs/speech-to-text-supported-languages
 TRANSLATE_TO=''         # Pick language to translate to. Leaving it empty will default to the language of your IP address
-SILENCE=750             # Reduce if the dialog is continuous with small pauses
+SILENCE=500             # Reduce if the dialog is continuous with few pauses
 THRESH=10               # Reduce if the speech-to-noise ratio is low
 
 def vid2sub(v):
@@ -64,11 +64,35 @@ def capture_audio(vid):
     with open(vid2sub(vid), "wb") as f:
         f.write(whole_text.encode('utf8'))
     
-
 def main(file):
     capture_audio(file)
     ds.translate(vid2sub(file), file, TRANSLATE_TO)
 
 if __name__ == "__main__":
-    f=input("video file name/path: ")
-    main(f)
+    while True:
+        os.system("cls")
+        print("Subtitler v1.0.0\n")
+        print("(Type in \"help\" for a list of commands)\n")
+        print("LANG:            "+LANG)
+        print("TRANSLATE_TO:    "+TRANSLATE_TO)
+        print("SILENCE:         "+str(SILENCE))
+        print("THRESH:          "+str(THRESH))
+        print("")
+        f=input(">").split()
+        if f[0].lower()=="lang":
+            LANG=f[1]
+        elif f[0].lower()=="translate_to":
+            TRANSLATE_TO=f[1]
+        elif f[0].lower()=="silence":
+            SILENCE=f[1]
+        elif f[0].lower()=="thresh":
+            THRESH=f[1]
+        elif f[0].lower()=="help":
+            print("\nlang <BCP-47>: Pick a language to translate from. More languages at https://cloud.google.com/speech-to-text/docs/speech-to-text-supported-languages\n")
+            print("translate_to <language>: Pick a language to translate to.\n")
+            print("silence <int>: Reduce if the dialog is continuous with few pauses\n")
+            print("thresh <int>: Reduce if the speech-to-noise ratio is low\n")
+            print("Anything else typed will be interpreted as a video filename to add subtitles to.\n")
+            os.system('pause')
+        else:
+            main(f[0])
