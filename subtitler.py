@@ -84,9 +84,9 @@ if __name__ == "__main__":
         elif f[0].lower()=="translate_to":
             TRANSLATE_TO=f[1]
         elif f[0].lower()=="silence":
-            SILENCE=f[1]
+            SILENCE=int(f[1])
         elif f[0].lower()=="thresh":
-            THRESH=f[1]
+            THRESH=int(f[1])
         elif f[0].lower()=="help":
             print("\nlang <BCP-47>: Pick a language to translate from. More languages at https://cloud.google.com/speech-to-text/docs/speech-to-text-supported-languages\n")
             print("translate_to <language>: Pick a language to translate to.\n")
