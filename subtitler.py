@@ -9,7 +9,7 @@ r = sr.Recognizer()
 
 LANG='ru-RU'            # More languages at https://cloud.google.com/speech-to-text/docs/speech-to-text-supported-languages
 TRANSLATE_TO=''         # Pick language to translate to. Leaving it empty will default to the language of your IP address
-SILENCE=500             # Reduce if the dialog is continuous with few pauses
+SILENCE=250             # Reduce if the dialog is continuous with few pauses
 THRESH=10               # Reduce if the speech-to-noise ratio is low
 
 def vid2sub(v):
@@ -56,8 +56,8 @@ def capture_audio(vid):
             print("Error:", str(e))
         else:
             text = f"{text.capitalize()}. "
-            print(chunk_filename, ":", text)
-            whole_text += add_quote(i, nd[i-1][0]-250, nd[i-1][1]+500, text)
+            print(timestamp(nd[i-1][0]), ":", text)
+            whole_text += add_quote(i, nd[i-1][0], nd[i-1][1]+500, text)
 
     os.remove(chunk_filename) 
     os.remove("tmp.wav") 
@@ -95,4 +95,7 @@ if __name__ == "__main__":
             print("Anything else typed will be interpreted as a video filename to add subtitles to.\n")
             os.system('pause')
         else:
-            main(f[0])
+            try:
+                main(f[0])
+            except:
+                pass
