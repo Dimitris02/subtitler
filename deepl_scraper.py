@@ -2,11 +2,32 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from time import sleep
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from webdriver_manager.firefox import GeckoDriverManager
+
+def initialize_firefox_driver():
+    options = FirefoxOptions()
+    set_common_options(options)
+    service = FirefoxService(GeckoDriverManager().install())
+    return webdriver.Firefox(service=service, options=options)
+
+def set_common_options(options):
+    options.add_argument("--disable-infobars")
+    options.add_argument("--disable-popup-blocking")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--log-level=3")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--disable-extensions")
+    options.add_argument('--disable-features=PrivacySandboxSettings4')
+    options.add_argument("--window-size=1280,720")
+    options.add_argument("--headless")
 
 c = Options()
-c.headless = 1
+c.headless = True
 TRANSLATE_TO=''
-driver = webdriver.Firefox(options=c)
+driver = initialize_firefox_driver()
 driver.get("https://www.deepl.com/en/translator")
 inp_box = driver.find_element(By.CSS_SELECTOR , 'd-textarea.min-h-0 > div:nth-child(1)')
 
