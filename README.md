@@ -7,3 +7,5 @@ variables in the subtitler.py file for better results. To pick a language to tra
 the LANG variable. To pick a language to translate to, change the TRANSLATE_TO variable.
 
 To launch the app run the launch.bat file and enter the filename/path of the video you want to add subtitles to.
+
+Get the .exe: https://drive.google.com/file/d/1ZCvttnGTJz_NH7SEiUPzRLQIORy42T6z/view?usp=sharing
