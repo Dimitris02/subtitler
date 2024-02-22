@@ -4,6 +4,8 @@ from pydub import AudioSegment
 from pydub.silence import split_on_silence, detect_nonsilent
 from moviepy.editor import *
 import deepl_scraper as ds
+import requests
+from bs4 import BeautifulSoup4
 
 r = sr.Recognizer()
 
@@ -11,6 +13,30 @@ LANG='ru-RU'            # More languages at https://cloud.google.com/speech-to-t
 TRANSLATE_TO=''         # Pick language to translate to. Leaving it empty will default to the language of your IP address
 SILENCE=250             # Reduce if the dialog is continuous with few pauses
 THRESH=10               # Reduce if the speech-to-noise ratio is low
+
+
+def get_supported_languages(session=None):
+    if session is None:
+        session = requests.Session()
+
+    resp = session.get("https://cloud.google.com/speech-to-text/docs/speech-to-text-supported-languages")
+    resp.raise_for_status()
+
+    soup = BeautifulSoup(resp.text, "html.parser")
+
+    tbody = soup.find("tbody", class_="list")
+    trs = tbody.find_all("tr")
+
+    languages = []
+    for tr in trs:
+        tds = tr.find_all("td")[:2]  # grab the first 2 "td" elements (Language (Country), Language-Code)
+
+        language = []
+        for i in tds:
+            language.append(str(i).replace("<td>", "").replace("</td>", ""))
+        if language not in languages:
+            languages.append(language)
+    return languages
 
 def vid2sub(v):
     a = v[:v.rfind(".")]
